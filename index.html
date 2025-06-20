@@ -4,119 +4,427 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Roeh Labs</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #f9fafb;
-      color: #111827;
-      line-height: 1.6;
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #0f172a;
+      --accent: #10b981;
+      --background: #ffffff;
+      --surface: #f8fafc;
+      --text-primary: #0f172a;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --border: #e2e8f0;
+      --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--background);
+      color: var(--text-primary);
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Header */
     header {
-      background-color: #1f2937;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       color: white;
-      padding: 2rem;
+      padding: 4rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><circle cx="36" cy="6" r="6"/><circle cx="48" cy="30" r="6"/><circle cx="12" cy="24" r="6"/><circle cx="6" cy="48" r="6"/><circle cx="36" cy="42" r="6"/></g></svg>') repeat;
+    }
+
+    .hero {
+      position: relative;
+      z-index: 1;
       text-align: center;
     }
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -0.025em;
     }
-    header p {
-      font-size: 1.2rem;
-      margin-top: 0;
-    }
-    nav {
-      background-color: #111827;
-      display: flex;
-      justify-content: center;
-      padding: 1rem;
-    }
-    nav a {
-      color: #d1d5db;
-      margin: 0 1rem;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    nav a:hover {
-      color: white;
-    }
-    .container {
-      max-width: 960px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-    h2 {
-      color: #1f2937;
-      border-bottom: 2px solid #e5e7eb;
-      padding-bottom: 0.25rem;
-    }
-    .section {
+
+    .hero .tagline {
+      font-size: clamp(1.125rem, 2vw, 1.5rem);
+      opacity: 0.9;
+      font-weight: 300;
       margin-bottom: 2rem;
     }
-    footer {
-      background-color: #f3f4f6;
+
+    .hero .description {
+      font-size: 1.125rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      opacity: 0.85;
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      background: rgba(248, 250, 252, 0.8);
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary);
+    }
+
+    /* Main Content */
+    main {
+      padding: 4rem 0;
+    }
+
+    .section {
+      margin-bottom: 4rem;
+    }
+
+    .section-header {
       text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #6b7280;
+      margin-bottom: 3rem;
     }
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2rem;
-      }
-      nav {
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .section-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Focus Areas Grid */
+    .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .focus-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .focus-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+
+    .focus-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+
+    .focus-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .focus-card .sdg {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      color: var(--primary);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .focus-card ul {
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    .focus-card li {
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+      position: relative;
+      color: var(--text-secondary);
+    }
+
+    .focus-card li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .focus-card strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 3rem;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .contact-link:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--secondary);
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+      margin-top: 4rem;
+    }
+
+    footer p {
+      opacity: 0.8;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-content {
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 1rem;
+      }
+
+      .nav-links {
+        gap: 1rem;
+      }
+
+      .focus-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-links {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .contact-section {
+        padding: 2rem 1rem;
       }
     }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .focus-card {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .focus-card:nth-child(2) { animation-delay: 0.1s; }
+    .focus-card:nth-child(3) { animation-delay: 0.2s; }
   </style>
 </head>
 <body>
   <header>
-    <h1>Yasha Labs</h1>
-    <p>AI for the Human Condition.</p>
+    <div class="container">
+      <div class="hero">
+        <h1>Roeh Labs</h1>
+        <p class="tagline">AI for the Human Condition</p>
+        <p class="description">
+          An AI innovation lab dedicated to solving the world's hardest problems through ethical, scalable technology focused on health, equity, and sustainability.
+        </p>
+      </div>
+    </div>
   </header>
+
   <nav>
-    <a href="./">Home</a>
-    <!--<a href="./projects">Projects</a>
-    <a href="./about">About</a>
-    <a href="./get-involved">Get Involved</a>-->
+    <div class="container">
+      <div class="nav-content">
+        <div class="logo">Roeh Labs</div>
+        <ul class="nav-links">
+          <li><a href="./" class="active">Home</a></li>
+          <!--<li><a href="./projects">Projects</a></li>
+          <li><a href="./about">About</a></li>
+          <li><a href="./get-involved">Get Involved</a></li>-->
+        </ul>
+      </div>
+    </div>
   </nav>
-  <main class="container">
-    <section class="section">
-      <h2>Mission</h2>
-      <p>
-        Yasha Labs is an AI innovation lab dedicated to solving some of the world’s hardest problems—chronic disease, health access, AI inequality, and climate degradation—through ethical, scalable technology. We focus on real-time human health monitoring, equitable AI infrastructure, and sustainable computing.
-      </p>
-    </section>
-    <section class="section">
-      <h2>Focus Areas</h2>
-      <h3>SDG 3: Good Health and Well-Being</h3>
-      <ul>
-        <li><strong>Real-Time Quantum Telemetry for the Human Body:</strong> Continuous, non-invasive monitoring to detect and treat diseases like cancer and Alzheimer's in real time.</li>
-        <li><strong>Closed-Loop Wearable Therapies:</strong> Personalized detection and intervention for autonomic dysfunction using nervous system-aware wearables.</li>
-        <li><strong>Autonomous Mobile Clinics:</strong> Using autonomous vehicles to bring healthcare access to underserved areas.</li>
-      </ul>
-      <h3>SDG 10: Reduced Inequalities</h3>
-      <ul>
-        <li><strong>Global AI & Sustainability Compact:</strong> Ensuring AI development aligns with climate justice and equitable access.</li>
-        <li><strong>Global South-Owned Data Centers:</strong> Local, sustainable infrastructure for digital sovereignty.</li>
-      </ul>
-      <h3>SDG 7: Clean and Affordable Energy</h3>
-      <ul>
-        <li><strong>Sustainable AI Paradigms:</strong> Designing energy-efficient architectures to reduce AI’s environmental impact.</li>
-      </ul>
-    </section>
-    <section class="section">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:hello@yashalabs.org">hello@yashalabs.org</a></p>
-      <p>GitHub: <a href="https://github.com/Yasha-Labs" target="_blank">Yasha-Labs</a></p>
-    </section>
+
+  <main>
+    <div class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Our Mission</h2>
+          <p class="section-subtitle">
+            We focus on real-time human health monitoring, equitable AI infrastructure, and sustainable computing to create meaningful impact.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Focus Areas</h2>
+          <p class="section-subtitle">
+            Our work spans across critical UN Sustainable Development Goals, addressing health, inequality, and clean energy.
+          </p>
+        </div>
+        
+        <div class="focus-grid">
+          <div class="focus-card">
+            <div class="sdg">SDG 3: Good Health and Well-Being</div>
+            <h3>Healthcare Innovation</h3>
+            <ul>
+              <li><strong>Real-Time Quantum Telemetry:</strong> Continuous, non-invasive monitoring to detect and treat diseases like cancer and Alzheimer's in real time.</li>
+              <li><strong>Closed-Loop Wearable Therapies:</strong> Personalized detection and intervention for autonomic dysfunction using nervous system-aware wearables.</li>
+              <li><strong>Autonomous Mobile Clinics:</strong> Using autonomous vehicles to bring healthcare access to underserved areas.</li>
+            </ul>
+          </div>
+
+          <div class="focus-card">
+            <div class="sdg">SDG 10: Reduced Inequalities</div>
+            <h3>Equitable AI Access</h3>
+            <ul>
+              <li><strong>Global AI & Sustainability Compact:</strong> Ensuring AI development aligns with climate justice and equitable access.</li>
+              <li><strong>Global South-Owned Data Centers:</strong> Local, sustainable infrastructure for digital sovereignty.</li>
+            </ul>
+          </div>
+
+          <div class="focus-card">
+            <div class="sdg">SDG 7: Clean and Affordable Energy</div>
+            <h3>Sustainable Computing</h3>
+            <ul>
+              <li><strong>Sustainable AI Paradigms:</strong> Designing energy-efficient architectures to reduce AI's environmental impact.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="contact-section">
+          <h2 class="section-title">Get In Touch</h2>
+          <p class="section-subtitle">
+            Ready to collaborate on solving humanity's greatest challenges?
+          </p>
+          <div class="contact-links">
+            <a href="mailto:hello@Roehlabs.org" class="contact-link">
+              📧 Email Us
+            </a>
+            <a href="https://github.com/Roeh-Labs" target="_blank" class="contact-link">
+              🔗 GitHub
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
+
   <footer>
-    © 2025 Yasha Labs · AI for the Human Condition.
+    <div class="container">
+      <p>© 2025 Roeh Labs · AI for the Human Condition</p>
+    </div>
   </footer>
 </body>
 </html>
